@@ -2,44 +2,53 @@
 import Layout from "../layouts/Layout.astro";
 
 // --- Easy-to-edit placeholders -------------------------------------------
-const NAME = "Tu Nombre";
-const WHATSAPP_NUMBER = "1XXXXXXXXXX"; // TODO: replace with real number, digits only (E.164, no "+")
-const INSTAGRAM_HANDLE = "tuusuario"; // TODO: replace with real Instagram handle
-const PHONE_DISPLAY = "+1 (XXX) XXX-XXXX"; // TODO: replace with real phone number
+const NAME = "Héctor Galeas";
+const WHATSAPP_NUMBER = "19517537172";
+const INSTAGRAM_HANDLE = "hector_web_developer";
+const PHONE_DISPLAY = "+1 (951) 753-7172";
 // ---------------------------------------------------------------------------
 
-const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}`;
+const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, me interesa tus servicios")}`;
 
 const projects = [
   {
-    title: "Proyecto 1",
+    title: "Metamorfosis LLC",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore.",
+      "Plataforma de e-commerce completa para una tienda de belleza profesional: catálogo, pagos con Square, envíos en tiempo real y cuenta de cliente. Sitio en producción, funcionando con clientes reales.",
+    url: "https://metamorfosisllc.com/",
   },
   {
-    title: "Proyecto 2",
+    title: "Vida en Barra",
     description:
-      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Tienda en línea de jabones y shampoo bars artesanales, con checkout y catálogo similar a Metamorfosis en una versión más compacta. Sitio en desarrollo — actualmente con datos de prueba.",
+    url: "https://vida-en-barra.vercel.app/",
   },
   {
-    title: "Proyecto 3",
+    title: "Plantilla para negocios de control de plagas",
     description:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "Plantilla bilingüe (español/inglés) creada como preview para un negocio de fumigación. Reutilizable: se adapta a los colores y datos de cualquier negocio similar. Disponible para la venta.",
+    url: "https://pestly-zeta.vercel.app/en",
   },
 ];
 
-const reviews = [
+const reviews: {
+  name: string;
+  business: string;
+  address?: string;
+  quote: string;
+}[] = [
   {
-    name: "Cliente Uno",
-    business: "Nombre del Negocio",
+    name: "Alexandra Álvarez",
+    business: "Metamorfosis LLC",
+    address: "211 W B St, Ontario, CA 91762",
     quote:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation.",
+      "Héctor se encargó de construir toda nuestra tienda en línea desde cero — catálogo, pagos, envíos, todo funcionando sin problemas. Siempre responde rápido cuando necesitamos algún ajuste.",
   },
   {
-    name: "Cliente Dos",
-    business: "Nombre del Negocio",
+    name: "Yadira Figueroa",
+    business: "Vida en Barra",
     quote:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse. Excepteur sint occaecat cupidatat non proident.",
+      "Le expliqué lo que necesitaba para mi tienda de jabones y Héctor lo tradujo perfecto en un sitio bonito y fácil de usar. Muy profesional y con mucha paciencia para explicarme cada paso.",
   },
 ];
 ---
@@ -123,7 +132,9 @@ const reviews = [
                     {project.description}
                   </p>
                   <a
-                    href="#"
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline"
                   >
                     Ver sitio →
@@ -171,6 +182,11 @@ const reviews = [
                   <span class="block text-sm text-text-muted">
                     {review.business}
                   </span>
+                  {review.address && (
+                    <span class="block text-xs text-text-muted/70">
+                      {review.address}
+                    </span>
+                  )}
                 </figcaption>
               </figure>
             ))
