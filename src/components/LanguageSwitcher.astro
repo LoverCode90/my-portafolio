@@ -1,0 +1,48 @@
+---
+import FlagMX from "./FlagMX.astro";
+import FlagUS from "./FlagUS.astro";
+import type { Lang } from "../i18n/content";
+
+interface Props {
+  currentLang: Lang;
+  label: string;
+}
+
+const { currentLang, label } = Astro.props;
+
+const options: { lang: Lang; href: string; name: string }[] = [
+  { lang: "es", href: "/", name: "Español" },
+  { lang: "en", href: "/en", name: "English" },
+];
+---
+
+<details class="relative">
+  <summary
+    aria-label={label}
+    class="flex cursor-pointer list-none items-center gap-1 rounded-md border border-border px-2.5 py-1.5 text-sm font-medium text-text marker:hidden sm:gap-1.5 sm:px-3 sm:py-2 [&::-webkit-details-marker]:hidden"
+  >
+    {currentLang === "es" ? <FlagMX class="h-3.5 w-5 shrink-0" /> : <FlagUS class="h-3.5 w-5 shrink-0" />}
+    <span>{currentLang.toUpperCase()}</span>
+    <svg viewBox="0 0 12 8" class="h-2 w-3 shrink-0" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path d="M1 1.5L6 6.5L11 1.5" />
+    </svg>
+  </summary>
+  <div class="absolute right-0 top-full z-20 mt-2 w-36 rounded-md border border-border bg-surface p-1">
+    {
+      options.map((option) => (
+        <a
+          href={option.href}
+          aria-current={option.lang === currentLang ? "page" : undefined}
+          class={`flex items-center gap-2 rounded px-2 py-1.5 text-sm ${
+            option.lang === currentLang
+              ? "font-semibold text-accent"
+              : "text-text-muted hover:text-text"
+          }`}
+        >
+          {option.lang === "es" ? <FlagMX class="h-3.5 w-5 shrink-0" /> : <FlagUS class="h-3.5 w-5 shrink-0" />}
+          {option.name}
+        </a>
+      ))
+    }
+  </div>
+</details>

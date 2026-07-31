@@ -1,0 +1,263 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+import metamorfosisImg from "../assets/projects/metamorfosis.png";
+import vidaEnBarraImg from "../assets/projects/vida-en-barra.png";
+import plagaCeroImg from "../assets/projects/plaga-cero.png";
+import heroPhoto from "../assets/profile/hector.jpg";
+import { content, type Lang } from "../i18n/content";
+import {
+  NAME,
+  WHATSAPP_NUMBER,
+  INSTAGRAM_HANDLE,
+  PHONE_DISPLAY,
+} from "../site.config";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = content[lang];
+
+const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(t.hero.whatsappMessage)}`;
+
+const projectAssets = [
+  { url: "https://metamorfosisllc.com/", image: metamorfosisImg },
+  { url: "https://vida-en-barra.vercel.app/", image: vidaEnBarraImg },
+  { url: "https://pestly-zeta.vercel.app/en", image: plagaCeroImg },
+];
+const projects = projectAssets.map((asset, i) => ({
+  ...asset,
+  ...t.projects.items[i],
+}));
+
+const reviewMeta: { name: string; business: string; address?: string }[] = [
+  {
+    name: "Alexandra Álvarez",
+    business: "Metamorfosis LLC",
+    address: "211 W B St, Ontario, CA 91762",
+  },
+  { name: "Yadira Figueroa", business: "Vida en Barra" },
+];
+const reviews = reviewMeta.map((meta, i) => ({
+  ...meta,
+  ...t.reviews.items[i],
+}));
+---
+
+<Layout
+  title={`${NAME} — Web Developer`}
+  description={t.meta.description}
+  lang={t.htmlLang}
+>
+  <header class="sticky top-0 z-10 border-b border-border bg-bg">
+    <nav
+      class="mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-4 sm:gap-4 sm:px-6"
+      aria-label={t.nav.ariaLabel}
+    >
+      <a href="#top" class="whitespace-nowrap text-lg font-semibold text-text">
+        {NAME}
+      </a>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <LanguageSwitcher currentLang={lang} label={t.nav.languageLabel} />
+        <a
+          href="#contact"
+          class="whitespace-nowrap rounded-md bg-accent px-3.5 py-2 text-sm font-medium text-accent-fg hover:bg-accent/90 sm:px-4"
+        >
+          {t.nav.contact}
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="mx-auto max-w-5xl px-6 py-20 sm:py-28">
+      <div class="flex flex-col items-center gap-8 text-center">
+        <div
+          class="h-32 w-32 shrink-0 overflow-hidden rounded-full bg-surface ring-2 ring-border sm:h-40 sm:w-40"
+        >
+          <Image
+            src={heroPhoto}
+            alt={t.hero.photoAlt(NAME)}
+            width={160}
+            height={160}
+            class="h-full w-full object-cover object-top"
+          />
+        </div>
+        <div class="max-w-2xl">
+          <h1 class="text-3xl font-bold tracking-tight text-text sm:text-4xl">
+            {t.hero.greeting(NAME)}
+          </h1>
+          <p class="mt-5 text-base leading-relaxed text-text-muted sm:text-lg">
+            {t.hero.paragraph}
+          </p>
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
+            <a
+              href="#projects"
+              class="rounded-md border border-border px-6 py-3 text-sm font-medium text-text hover:border-accent hover:text-accent"
+            >
+              {t.hero.ctaProjects}
+            </a>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-md bg-accent px-6 py-3 text-sm font-medium text-accent-fg hover:bg-accent/90"
+            >
+              {t.hero.ctaWhatsapp}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="border-t border-border bg-surface/40">
+      <div class="mx-auto max-w-5xl px-6 py-20">
+        <h2 class="text-2xl font-bold text-text sm:text-3xl">{t.projects.heading}</h2>
+        <div class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            projects.map((project) => (
+              <article class="flex flex-col overflow-hidden rounded-lg border border-border bg-surface">
+                <Image
+                  src={project.image}
+                  alt={t.projects.imageAlt(project.title)}
+                  width={640}
+                  height={360}
+                  class="aspect-video w-full object-cover object-top"
+                />
+                <div class="flex flex-1 flex-col p-6">
+                  <h3 class="text-lg font-semibold text-text">
+                    {project.title}
+                  </h3>
+                  <p class="mt-2 flex-1 text-sm leading-relaxed text-text-muted">
+                    {project.description}
+                  </p>
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline"
+                  >
+                    {t.projects.viewSite}
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="border-t border-border">
+      <div class="mx-auto max-w-5xl px-6 py-20">
+        <h2 class="text-2xl font-bold text-text sm:text-3xl">
+          {t.reviews.heading}
+        </h2>
+        <div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
+          {
+            reviews.map((review) => (
+              <figure class="rounded-lg border border-border bg-surface p-6">
+                <div class="flex gap-1 text-accent" aria-label={t.reviews.ratingLabel}>
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="h-5 w-5"
+                      aria-hidden="true"
+                    >
+                      <path d="M10 1.5l2.6 5.27 5.82.85-4.21 4.1 1 5.8L10 14.9l-5.21 2.74 1-5.8-4.21-4.1 5.82-.85L10 1.5z" />
+                    </svg>
+                  ))}
+                </div>
+                <blockquote class="mt-4 text-sm leading-relaxed text-text-muted">
+                  “{review.quote}”
+                </blockquote>
+                <figcaption class="mt-4">
+                  <span class="block text-sm font-semibold text-text">
+                    {review.name}
+                  </span>
+                  <span class="block text-sm text-text-muted">
+                    {review.business}
+                  </span>
+                  {review.address && (
+                    <span class="block text-xs text-text-muted/70">
+                      {review.address}
+                    </span>
+                  )}
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- CONTACT / FOOTER -->
+  <footer id="contact" class="border-t border-border bg-surface/40">
+    <div class="mx-auto max-w-5xl px-6 py-20">
+      <h2 class="text-2xl font-bold text-text sm:text-3xl">{t.contact.heading}</h2>
+      <p class="mt-3 max-w-xl text-sm leading-relaxed text-text-muted">
+        {t.contact.paragraph}
+      </p>
+
+      <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 rounded-md bg-accent px-6 py-3 text-sm font-medium text-accent-fg hover:bg-accent/90"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="h-5 w-5"
+            aria-hidden="true"
+          >
+            <path
+              d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.1.11-1.78-.11-.41-.13-.94-.3-1.62-.6-2.84-1.23-4.7-4.08-4.84-4.27-.14-.19-1.16-1.54-1.16-2.94 0-1.4.73-2.09.99-2.37.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2.88 2.14.07.15.12.32.02.51-.09.19-.14.31-.28.48-.14.16-.29.36-.42.49-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.61-.07.16-.19.68-.79.86-1.06.18-.28.36-.23.6-.14.24.09 1.53.72 1.79.85.26.13.44.2.5.31.06.11.06.63-.18 1.31z"
+            />
+          </svg>
+          {t.contact.whatsapp}
+        </a>
+
+        <a
+          href={`https://instagram.com/${INSTAGRAM_HANDLE}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 rounded-md border border-border px-6 py-3 text-sm font-medium text-text hover:border-accent hover:text-accent"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="h-5 w-5"
+            aria-hidden="true"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" />
+          </svg>
+          @{INSTAGRAM_HANDLE}
+        </a>
+
+        <a
+          href={`tel:+${WHATSAPP_NUMBER}`}
+          class="inline-flex items-center gap-2 px-2 py-3 text-sm text-text-muted hover:text-text"
+        >
+          {PHONE_DISPLAY}
+        </a>
+      </div>
+
+      <p class="mt-16 border-t border-border pt-6 text-xs text-text-muted">
+        © {new Date().getFullYear()} {NAME}. {t.contact.copyright}
+      </p>
+    </div>
+  </footer>
+</Layout>
