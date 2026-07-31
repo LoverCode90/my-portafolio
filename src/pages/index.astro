@@ -245,9 +245,12 @@ const reviews: {
           @{INSTAGRAM_HANDLE}
         </a>
 
-        <span class="inline-flex items-center gap-2 px-2 py-3 text-sm text-text-muted">
+        <a
+          href={`tel:+${WHATSAPP_NUMBER}`}
+          class="inline-flex items-center gap-2 px-2 py-3 text-sm text-text-muted hover:text-text"
+        >
           {PHONE_DISPLAY}
-        </span>
+        </a>
       </div>
 
       <p class="mt-16 border-t border-border pt-6 text-xs text-text-muted">
