@@ -1,5 +1,9 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
+import metamorfosisImg from "../assets/projects/metamorfosis.png";
+import vidaEnBarraImg from "../assets/projects/vida-en-barra.png";
+import plagaCeroImg from "../assets/projects/plaga-cero.png";
 
 // --- Easy-to-edit placeholders -------------------------------------------
 const NAME = "Héctor Galeas";
@@ -16,18 +20,21 @@ const projects = [
     description:
       "Plataforma de e-commerce completa para una tienda de belleza profesional: catálogo, pagos con Square, envíos en tiempo real y cuenta de cliente. Sitio en producción, funcionando con clientes reales.",
     url: "https://metamorfosisllc.com/",
+    image: metamorfosisImg,
   },
   {
     title: "Vida en Barra",
     description:
       "Tienda en línea de jabones y shampoo bars artesanales, con checkout y catálogo similar a Metamorfosis en una versión más compacta. Sitio en desarrollo — actualmente con datos de prueba.",
     url: "https://vida-en-barra.vercel.app/",
+    image: vidaEnBarraImg,
   },
   {
     title: "Plantilla para negocios de control de plagas",
     description:
       "Plantilla bilingüe (español/inglés) creada como preview para un negocio de fumigación. Reutilizable: se adapta a los colores y datos de cualquier negocio similar. Disponible para la venta.",
     url: "https://pestly-zeta.vercel.app/en",
+    image: plagaCeroImg,
   },
 ];
 
@@ -123,7 +130,13 @@ const reviews: {
           {
             projects.map((project) => (
               <article class="flex flex-col overflow-hidden rounded-lg border border-border bg-surface">
-                <div class="aspect-video w-full bg-bg" />
+                <Image
+                  src={project.image}
+                  alt={`Captura del sitio ${project.title}`}
+                  width={640}
+                  height={360}
+                  class="aspect-video w-full object-cover object-top"
+                />
                 <div class="flex flex-1 flex-col p-6">
                   <h3 class="text-lg font-semibold text-text">
                     {project.title}
