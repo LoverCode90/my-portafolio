@@ -87,7 +87,7 @@ export const content: Record<Lang, PageContent> = {
         {
           title: "Vida en Barra",
           description:
-            "Tienda en línea de jabones y shampoo bars artesanales, con checkout y catálogo similar a Metamorfosis en una versión más compacta. Sitio en desarrollo — actualmente con datos de prueba.",
+            "Tienda en línea de jabones y shampoo bars artesanales, con checkout y catálogo similar a Metamorfosis en una versión más compacta. Sitio en producción.",
         },
         {
           title: "Plantilla para negocios de control de plagas",
@@ -150,7 +150,7 @@ export const content: Record<Lang, PageContent> = {
         {
           title: "Vida en Barra",
           description:
-            "Online store for handmade soap and shampoo bars, with checkout and a catalog similar to Metamorfosis in a more compact version. Site in development — currently using placeholder data.",
+            "Online store for handmade soap and shampoo bars, with checkout and a catalog similar to Metamorfosis in a more compact version. Live in production.",
         },
         {
           title: "Pest Control Business Template",
